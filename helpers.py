@@ -1,10 +1,16 @@
 import json
 import psycopg2
+import config
 
 
 # database
 def get_db():
-    conn = psycopg2.connect('dbname=digikala user=postgres')
+    dsn = 'dbname={} user={} password={}'.format(
+        config.db['database'],
+        config.db['user'],
+        config.db['password'],
+    )
+    conn = psycopg2.connect(dsn)
     return conn
 
 
@@ -32,4 +38,4 @@ def has_product(product_id):
 
 def clean_persian_number(number):
     return number.replace("۰", "0").replace("۱", "1").replace("۲", "2").replace("۳", "3").replace("۴", "4") \
-        .replace("۵", "5").replace("۶", "6").replace("۸", "8").replace("۷", "7").replace("۹", "9").replace(",","")
+        .replace("۵", "5").replace("۶", "6").replace("۸", "8").replace("۷", "7").replace("۹", "9").replace(",", "")
